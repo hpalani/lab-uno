@@ -25,17 +25,18 @@ string setA[256];
 string setB[256];
 
 int main() {
+    // Load Set A data
     cout << "Enter content for Set A, separated by spaces:" << endl;
     string input;
     getline(cin, input);
     stringstream ssA(input);
-    
     int i = 0;
     while (ssA.good() && i < 256) {
         ssA >> setA[i];
         ++i;
     }
     
+    // Load Set B data
     cout << "Enter content for Set B, separated by spaces:" << endl;
     getline(cin, input);
     stringstream ssB(input);
@@ -81,53 +82,39 @@ int main() {
     }
 }
 
-
-// Prints union of arr1[0..n1-1] and arr2[0..n2-1]
 void determineUnion(string arr1[], string arr2[], int n1, int n2) {
-    set<string> hs;
+    set<string> set;
  
-    // Inhsert the elements of arr1[] to set hs
-    for (int i = 0; i < n1; i++) {
-        hs.insert(arr1[i]);
-    }
+    // Load set<string>
+    for (int i = 0; i < n1; i++) { set.insert(arr1[i]); }
+    for (int i = 0; i < n2; i++) { set.insert(arr2[i]); }
  
-    // Insert the elements of arr2[] to set hs
-    for (int i = 0; i < n2; i++) {
-        hs.insert(arr2[i]);
-    }
- 
-    // Print the content of set hs
+    // Print union roster & cardinality
     int cardinality = 0;
     cout << endl;
     cout << "U N I O N" << endl;;
     cout << "Roster: { ";
-    for (auto it = hs.begin(); it != hs.end(); it++) {
+    for (auto it = set.begin(); it != set.end(); it++) {
         cout << *it << " ";
         cardinality++;
     }
     cout << "}" << endl;
     cout << "Cardinality: " << cardinality << endl;
 }
- 
-// Prints intersection of arr1[0..n1-1] and
-// arr2[0..n2-1]
+
 void determineIntersection(string arr1[], string arr2[], int n1, int n2) {
-    set<string> hs;
+    set<string> set;
  
-    // Insert the elements of arr1[] to set S
-    for (int i = 0; i < n1; i++) {
-        hs.insert(arr1[i]);
-    }
+    // Load set<string>
+    for (int i = 0; i < n1; i++) { set.insert(arr1[i]); }
     
-    // Print the content of set hs
+    // Print intersection roster & cardinality
     int cardinality = 0;
     cout << endl;
     cout << "I N T E R S E C T I O N" << endl;
     cout << "Roster: { ";
     for (int i = 0; i < n2; i++) {
-        // If element is present in set then
-        // push it to vector V
-        if (hs.find(arr2[i]) != hs.end()) {
+        if (set.find(arr2[i]) != set.end()) {
             cout << arr2[i] << " ";
             cardinality++;
         }
@@ -137,22 +124,20 @@ void determineIntersection(string arr1[], string arr2[], int n1, int n2) {
 }
 
 void determineRelativeComplement(string arr1[], string arr2[], int n1, int n2) {
-    set<string> hs;
- 
-    // Insert the elements of arr1[] to set S
+    set<string> set;
+    
+    // Load set<string>
     for (int i = 0; i < n1; i++) {
-        hs.insert(arr2[i]);
+        set.insert(arr2[i]);
     }
     
-    // Print the content of set hs
+    // Print relative complement roster & cardinality
     int cardinality = 0;
     cout << endl;
     cout << "R E L A T I V E\n" << "C O M P L E M E N T" << endl;
     cout << "Roster: { ";
     for (int i = 0; i < n2; i++) {
-        // If element is present in set then
-        // push it to vector V
-        if (hs.find(arr1[i]) == hs.end()) {
+        if (set.find(arr1[i]) == set.end()) {
             cout << arr1[i] << " ";
             cardinality++;
         }
@@ -162,11 +147,11 @@ void determineRelativeComplement(string arr1[], string arr2[], int n1, int n2) {
 }
 
 void determineCrossProduct(string arr1[], string arr2[], int n1, int n2) {
+    // Print cross product roster & cardinality
     int cardinality = 0;
     cout << endl;
     cout << "C R O S S\n" << "P R O D U C T" << endl;
     cout << "Roster: { ";
-    
     for (int x = 0; x < n1; x++) {
         for (int y = 0; y < n2; y++) {
             cout << "( " << arr1[x] << " , " << arr2[y] << " ) ";
@@ -178,6 +163,7 @@ void determineCrossProduct(string arr1[], string arr2[], int n1, int n2) {
 }
 
 void determinePSCardinality(string arr1[], string arr2[], int n1, int n2) {
+    // Print power set cardinality
     cout << endl;
     cout << "P O W E R\n" << "S E T" << endl;
     cout << "Cardinality: " << pow(2, n1*n2) << endl;
